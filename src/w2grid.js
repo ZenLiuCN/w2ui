@@ -29,7 +29,7 @@
 *   - add selectType: 'none' so that no selection can be make but with mouse
 *   - reorder records with frozen columns
 *   - focus/blur for selectType = cell not display grayed out selection
-*   - frozen columns 
+*   - frozen columns
         - load more only on the right side
         - scrolling on frozen columns is not working only on regular columns
 *   - copy or large number of records is slow
@@ -1094,7 +1094,7 @@
             var $box = $(this.box);
             if (recid != null) {
                 // both frozen and regular columns
-                $box = $(this.box).find('#grid_'+ this.name +'_frec_'+ recid +', #grid_'+ this.name +'_rec_'+ recid);                
+                $box = $(this.box).find('#grid_'+ this.name +'_frec_'+ recid +', #grid_'+ this.name +'_rec_'+ recid);
             }
             $box.find('.w2ui-soft-span').each(function () {
                 var offset = $(this).parents('table').offset();
@@ -1118,15 +1118,15 @@
                 var id  = 'grid_'+ obj.name +'_softspan_'+ tmp.row +'_'+ tmp.col;
                 var $el = $(obj.box).find('#'+id);
                 // insert if does not exits or different width
-                if ($el.length == 0 
-                        || tmp.width != w2utils.getSize($el[0], 'width') 
-                        || tmp.html != $el.html() 
+                if ($el.length == 0
+                        || tmp.width != w2utils.getSize($el[0], 'width')
+                        || tmp.html != $el.html()
                         || tmp.html != $el.attr('data-style')) {
                     $el.remove();
                     $(this).parents('table').parent()
                         .append('<div id="'+ id +'" recid="'+ obj.records[tmp.row].recid +'" index="'+ tmp.row +'" index="'+ tmp.column +'" '+
                             '   class="w2ui-soft-range" data-style="' + tmp.style + '"' +
-                            '   style="'+ tmp.style +'; left: '+ tmp.left +'px; top: '+ tmp.top +'px; width: '+ tmp.width +'px">'+ 
+                            '   style="'+ tmp.style +'; left: '+ tmp.left +'px; top: '+ tmp.top +'px; width: '+ tmp.width +'px">'+
                                 tmp.html +
                             '</div>')
                     $(obj.box).find('#'+id).css(css);
@@ -2152,7 +2152,7 @@
                 for (var s in changes[c]) {
                     if (s == 'recid') continue; // do not allow to change recid
                     if (typeof changes[c][s] === "object") changes[c][s] = changes[c][s].text;
-                    try { 
+                    try {
 			if (s.indexOf('.') != -1) {
 				eval("record['" + s.replace(/\./g, "']['") + "'] = changes[c][s]")
 			} else {
@@ -2204,7 +2204,7 @@
             var edit   = (rec ? rec.editable : null);
             if (edit == null || edit === true) edit = (col ? col.editable : null);
             if (!rec || !col || !edit || rec.editable === false) return;
-            
+
             if (['enum', 'file'].indexOf(edit.type) != -1) {
                 console.log('ERROR: input types "enum" and "file" are not supported in inline editing.');
                 return;
@@ -2411,8 +2411,8 @@
                         // if input too small - expand
                         expand.call(this, event);
                     })
-                    .on('keyup', function (event) { 
-                        expand.call(this, event); 
+                    .on('keyup', function (event) {
+                        expand.call(this, event);
                     });
                 // focus and select
                 if (edit.type == 'div') {
@@ -2470,7 +2470,7 @@
                 }
                 sel.removeAllRanges();
                 sel.addRange(rg);
-            }            
+            }
         },
 
         editChange: function (el, index, column, event) {
@@ -2736,7 +2736,7 @@
                 if (column && column.sortable) this.sort(field, null, (event && (event.ctrlKey || event.metaKey) ? true : false) );
                 if (eventData.field == 'line-number') {
                     if (this.getSelection().length >= this.records.length) {
-                        this.selectNone(); 
+                        this.selectNone();
                     } else {
                         this.selectAll();
                     }
@@ -2745,7 +2745,7 @@
                 // select entire column
                 if (eventData.field == 'line-number') {
                     if (this.getSelection().length >= this.records.length) {
-                        this.selectNone(); 
+                        this.selectNone();
                     } else {
                         this.selectAll();
                     }
@@ -3801,7 +3801,7 @@
             // -- separate summary
             var tmp = this.find({ summary: true }, true);
             if (tmp.length > 0) {
-                this.summary = [];    
+                this.summary = [];
                 for (var t = 0; t < tmp.length; t++) this.summary.push(this.records[tmp[t]]);
                 for (var t = tmp.length-1; t >= 0; t--) this.records.splice(tmp[t], 1);
             }
@@ -3873,7 +3873,7 @@
             obj.addRange('selection');
             setTimeout(function () { // allow to render first
                 obj.resize(); // needed for horizontal scroll to show (do not remove)
-                obj.scroll(); 
+                obj.scroll();
             }, 1);
 
             if ( obj.reorderColumns && !obj.last.columnDrag ) {
@@ -3935,12 +3935,12 @@
             this.reload();
             // focus
             $(this.box).find('#grid_'+ this.name + '_focus')
-                .on('focus', function (event) { 
+                .on('focus', function (event) {
                     clearTimeout(obj.last.kbd_timer);
                     if (!obj.hasFocus) obj.focus();
                 })
-                .on('blur', function (event) { 
-                    obj.last.kbd_timer = setTimeout(function () { 
+                .on('blur', function (event) {
+                    obj.last.kbd_timer = setTimeout(function () {
                         if (obj.hasFocus) { obj.blur(); }
                     }, 100); // need this timer to be 100 ms
                 })
@@ -5877,7 +5877,7 @@
                             '        <input class="w2ui-grid-select-check" type="checkbox" tabindex="-1"'+
                             '            '+ (isRowSelected ? 'checked="checked"' : '') +
                             '            onclick="var obj = w2ui[\''+ this.name +'\']; var recid = $(this).parents(\'tr\').attr(\'recid\'); '+
-                            '                clearTimeout(obj.last.kbd_timer); $(obj.box).find(\'#grid_'+ this.name + '_focus\').focus(); /* keep focus */' + 
+                            '                clearTimeout(obj.last.kbd_timer); $(obj.box).find(\'#grid_'+ this.name + '_focus\').focus(); /* keep focus */' +
                             '                if (!obj.multiSelect) { obj.selectNone(); }'+
                             '                if (this.checked) obj.select(recid); else obj.unselect(recid); '+
                             '                if (event.stopPropagation) event.stopPropagation(); else event.cancelBubble = true;">'+
@@ -5921,9 +5921,9 @@
                 if (soft_span > 1) {
                     soft_span--;
                 }
-                if (col.hidden) { 
-                    col_ind++; 
-                    if (this.columns[col_ind] == null) break; else continue; 
+                if (col.hidden) {
+                    col_ind++;
+                    if (this.columns[col_ind] == null) break; else continue;
                 }
                 var isChanged = !summary && record.changes && typeof record.changes[col.field] != 'undefined';
                 var rec_cell  = this.getCellHTML(ind, col_ind, summary);
@@ -5961,7 +5961,7 @@
                 }
                 var isCellSelected = false;
                 if (isRowSelected && $.inArray(col_ind, sel.columns[ind]) != -1) isCellSelected = true;
-                tmph = '<td class="w2ui-grid-data'+ (isCellSelected ? ' w2ui-selected' : '') + 
+                tmph = '<td class="w2ui-grid-data'+ (isCellSelected ? ' w2ui-selected' : '') +
                             (isChanged ? ' w2ui-changed' : '') +
                             (soft_set === true ? ' w2ui-soft-span' : '') +
                             (soft_set === false && soft_span > 1 ? ' w2ui-soft-hidden' : '') +
@@ -5997,7 +5997,7 @@
             var edit   = col.editable;
             var style  = 'max-height: '+ parseInt(this.recordHeight) +'px;';
             // various renderers
-            if (typeof col.render != 'undefined') {
+            if (typeof col.render != 'undefined' && col.render!=null) {
                 if (typeof col.render == 'function') {
                     data = $.trim(col.render.call(this, record, ind, col_ind));
                     if (data.length < 4 || data.substr(0, 4).toLowerCase() != '<div') data = '<div style="'+ style +'">' + data + '</div>';
@@ -6307,7 +6307,7 @@
             var tmp  = this.records[index].w2ui;
             var span = (tmp && tmp.colspan ? tmp.colspan[this.columns[check].field] : 1);
             var edit = this.columns[check].editable;
-            if (this.columns[check].hidden || span == 0 
+            if (this.columns[check].hidden || span == 0
                     || (editable == true && (edit == null ||  ['checkbox', 'check'].indexOf(edit.type) != -1))) {
                 return this.nextCell(index, check, editable);
             }
@@ -6320,7 +6320,7 @@
             var tmp  = this.records[index].w2ui;
             var span = (tmp && tmp.colspan ? tmp.colspan[this.columns[check].field] : 1);
             var edit = this.columns[check].editable;
-            if (this.columns[check].hidden || span == 0 
+            if (this.columns[check].hidden || span == 0
                     || (editable == true && (edit == null ||  ['checkbox', 'check'].indexOf(edit.type) != -1))) {
                 return this.prevCell(index, check, editable);
             }
